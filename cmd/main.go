@@ -3,25 +3,27 @@ package main
 import (
 	"context"
 	"fmt"
-	"time"
+	"os"
+	"os/signal"
+	"syscall"
 
 	openmeteo "github.com/didineland/meteo/pkg/open-meteo"
 )
 
 func main() {
 
-	meteoChan := make(chan openmeteo.Current)
-	defer close(meteoChan)
-	ctx, _ := context.WithTimeout(context.Background(), 100*time.Second)
-	go openmeteo.GetMeteo(ctx, meteoChan)
+	ctx, cancel := context.WithCancel(context.Background())
+	c := make(chan os.Signal)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 
-	for {
-		select {
-		case current := <-meteoChan:
-			fmt.Printf("Received: %+v\n", current)
-		case <-ctx.Done():
-			return
-		}
-	}
+	go func() {
+		<-c
+		fmt.Println("Catched interrupt")
+		cancel()
+		os.Exit(1)
+	}()
+
+	go openmeteo.StartMeteoBroker(ctx)
+	openmeteo.ConnectGrpcServer(ctx)
 
 }

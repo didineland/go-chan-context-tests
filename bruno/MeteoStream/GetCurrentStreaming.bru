@@ -1,0 +1,21 @@
+meta {
+  name: GetCurrentStreaming
+  type: grpc
+  seq: 1
+}
+
+grpc {
+  url: http://localhost:8080/
+  method: /protofiles.MeteoStremingService/GetCurrentStreaming
+  body: grpc
+  protoPath: ../../protofiles/meteo-streaming/meteo_streaming.proto
+  auth: inherit
+  methodType: server-streaming
+}
+
+body:grpc {
+  name: message 1
+  content: '''
+    {}
+  '''
+}

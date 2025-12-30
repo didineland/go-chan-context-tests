@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package protofiles;
+option go_package = "protofiles/meteo_streaming";
+
+message Empty {
+
+}
+
+message CurrentResponse {
+    float Temperature2M = 1;
+}
+
+service MeteoStremingService {
+    rpc GetCurrentStreaming(Empty) returns (stream CurrentResponse) {}
+}

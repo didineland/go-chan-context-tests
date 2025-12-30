@@ -1,0 +1,19 @@
+{
+  "version": "1",
+  "name": "MeteoStream",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ],
+  "size": 0,
+  "filesCount": 0,
+  "protobuf": {
+    "protoFiles": [
+      {
+        "path": "../../protofiles/meteo-streaming/meteo_streaming.proto",
+        "type": "file"
+      }
+    ]
+  }
+}

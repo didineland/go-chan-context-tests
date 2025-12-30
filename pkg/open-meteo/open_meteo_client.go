@@ -18,7 +18,7 @@ func GetMeteo(ctx context.Context, responseChannel chan<- Current) {
 	for true {
 		select {
 		case <-ctx.Done():
-			fmt.Println("Task completed or deadline exceeded:", ctx.Err())
+			fmt.Println("Client cancelled")
 			return
 		default:
 			callMeteo(ctx, responseChannel)
